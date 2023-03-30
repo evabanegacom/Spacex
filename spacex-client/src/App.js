@@ -6,6 +6,8 @@ function App() {
 
   // Fetch capsules data from API
   useEffect(() => {
+    const url = `http://localhost:5000/spacex-capsules?${getQueryParams(filters)}`
+    console.log({url})
     fetch(`http://localhost:5000/spacex-capsules?${getQueryParams(filters)}`)
       .then(response => response.json())
       .then(data => setCapsules(data));
@@ -21,6 +23,8 @@ function App() {
     }
     return queryParams;
   }
+
+  console.log({capsules})
 
   // Handler functions for filter buttons
   const handleStatusFilter = (status) => {
@@ -59,13 +63,13 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {capsules.map(capsule => (
+          {capsules?.map(capsule => (
             <tr key={capsule.id}>
               <td>{capsule.name}</td>
               <td>{capsule.type}</td>
               <td>{capsule.status}</td>
               <td>{capsule.original_launch}</td>
-              <td>{capsule.missions.map(mission => mission.name).join(', ')}</td>
+              {/* <td>{capsule.missions.map(mission => mission.name).join(', ')}</td> */}
             </tr>
           ))}
         </tbody>
